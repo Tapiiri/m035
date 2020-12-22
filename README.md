@@ -1,0 +1,1 @@
+This is a site for Computer Science Guild 35th Annuall Ball. Mostly a date counter at the moment though.

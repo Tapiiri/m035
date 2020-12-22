@@ -1,0 +1,51 @@
+* {
+  background: #312E39;
+}
+
+.main-container {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.counter-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 10%;
+}
+
+.counter-container h1, .counter-container h3  {
+  text-align: center;
+  color: white;
+}
+
+.counter {
+  font-size: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.counter-container.days {
+  flex: 1 0 100%;
+}
+.counter.days {
+  font-size: 10em;
+}
+
+.digit {
+  background: white;
+  color: black;
+  position: relative;
+}
+
+.digit+.digit{
+  margin-left: 1px;
+}
+
+.digit::after {
+  content: attr(data-time);
+}
