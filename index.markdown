@@ -9,6 +9,7 @@ layout: none
 </head>
 
 <body>
+    <div class="vertical-container">
     <div class="main-container" id="counter">
         <div class="counter-container days">
         <div class="counter days" id="counter-days">
@@ -36,6 +37,7 @@ layout: none
                 {% endfor %}
             </div>
         </div>
+    </div>
     </div>
   <script src="assets/counterScript.js"></script>
 

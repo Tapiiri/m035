@@ -27,6 +27,15 @@ html {
   background: #312E39;
 }
 
+.vertical-container {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .main-container {
   position: relative;
   margin-top: var(--MAIN-TOP);
