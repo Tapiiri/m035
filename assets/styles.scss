@@ -1,29 +1,59 @@
 ---
 ---
 
+
+@font-face {
+  font-family: "Coventry Garden";
+  src: url('CoventryGarden.ttf') format('truetype')
+}
 * {
+  margin: 0px;
+  --MAIN-TOP: 0px;
+  --MAIN-SCALE: 0.9;
+  --DAY-WHEEL-SIZE: 40vw;
+  --SMALL-WHEEL-SIZE: calc(var(--DAY-WHEEL-SIZE) / 2);
+  --SMALL-WHEEL-INSET:  calc(0px - var(--SMALL-WHEEL-SIZE) * 0.075);
+  --SMALL-WHEEL-CONTAINER-INSET: calc(0px - var(--SMALL-WHEEL-SIZE) * 0.4);
+  --SMALL-WHEEL-CONTAINER-LEFT-PAD: calc(var(--SMALL-WHEEL-SIZE) * 0.01);
+  --BIG-WHEEL-INSET-SIDE:  calc(0px - var(--DAY-WHEEL-SIZE) / 2.5);
+  --BIG-WHEEL-INSET-BOTTOM:  calc(var(--DAY-WHEEL-SIZE) / 3);
+  --DAYS-CONTAINER-INSET-BOTTOM: calc(0px - var(--DAY-WHEEL-SIZE) / 1.56 );
+  --FRAME-TOP: calc(var(--DAY-WHEEL-SIZE) / 2.75);
+  --FRAME-HEIGHT: calc(100vh - var(--FRAME-TOP) - var(--MAIN-TOP));
+  font-family: "Coventry Garden"
+}
+
+html {
   background: #312E39;
 }
 
 .main-container {
-  margin-top: 100px;
+  position: relative;
+  margin-top: var(--MAIN-TOP);
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  transform-origin: center;
+  transform: scale(var(--MAIN-SCALE));
 }
 
+.small-wheels-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: 100vw;
+  padding-left: var(--SMALL-WHEEL-CONTAINER-LEFT-PAD);
+}
 .counter-container {
   display: flex;
   flex-direction: column;
-  flex: 1 0 10%;
 }
 
 .counter-container {
-  h1, h3 {
-    text-align: center;
-    color: white;
+  &+& {
+    margin-left: var(--SMALL-WHEEL-CONTAINER-INSET);
   }
 }
 
@@ -34,32 +64,104 @@
   justify-content: center;
 }
 
-.counter-container.days {
-  flex: 1 0 100%;
+#counter-days::after {
+  position:absolute;
+  z-index: -5;
+  background-image: url("taustapyörijä 2D.svg");
 }
-.counter.days {
-  font-size: 10em;
-}
-
-@use "sass:string";
 
 .digit {
-  background: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: black;
   position: relative;
+  transition: transform 1s ease-in-out;
+  transform: rotate(0);
+  width: var(--SMALL-WHEEL-SIZE);
+  height: var(--SMALL-WHEEL-SIZE);
+  
+  &-1 {
+    background-image: url("pikkukello 1.svg");
+    --rotation-direction: -1;
+    z-index: -1
+  }
+
+  &-2 {
+    background-image: url("pikkukello 2.svg");
+    --rotation-direction: 1;
+    margin-left: var(--SMALL-WHEEL-INSET)
+  }
 
   @for $i from 0 through 9 {
     &[data-time="#{$i}"] {
-      transform: rotate(calc(36deg * #{$i}));
+      transform: rotate(calc(var(--rotation-direction) * 36deg * #{$i}));
     }
   }
 }
 
-.digit+.digit{
-  margin-left: 1px;
+
+.days {
+  &.counter-container {
+    z-index: -1;
+    margin-bottom: var(--DAYS-CONTAINER-INSET-BOTTOM);
+  }
+  &.digit {
+    width: var(--DAY-WHEEL-SIZE);
+    height: var(--DAY-WHEEL-SIZE);
+  }
+  &.digit-1 {
+    background-image: url("paivakello 1.svg");
+    z-index: unset;
+  }
+  
+  &.digit-2 {
+    background-image: url("paivakello 2.svg");
+    --rotation-direction: -1;
+    margin-left: var(--BIG-WHEEL-INSET-SIDE);
+    margin-right: var(--BIG-WHEEL-INSET-SIDE);
+    margin-top: var(--BIG-WHEEL-INSET-BOTTOM);
+    z-index: -1;
+  }
+  
+  &.digit-3 {
+    background-image: url("paivakello 3.svg");
+    --rotation-direction: 1;
+  }  
 }
 
-.digit::after {
-  content: attr(data-time);
+
+.frame-container {
+  position: absolute;
+  width: 100vw;
+  height: calc(var(--DAY-WHEEL-SIZE) / 1.25);
+  top: var(--FRAME-TOP);
+  display: flex;
+  justify-content: center;
+
+  h1, h3 {
+    position: absolute;
+    color: gold;
+  }
+
+  h1 {
+    left: calc(var(--DAY-WHEEL-SIZE) * 1);
+    width: calc(var(--DAY-WHEEL-SIZE) * 0.5);
+    top: calc(var(--DAY-WHEEL-SIZE) * 0.2375);
+    text-align: center;
+  }
+  @for $i from 1 through 3 {
+    h3:nth-of-type(#{$i}) {
+      top: calc(var(--DAY-WHEEL-SIZE) * 0.675);
+      left: calc(var(--DAY-WHEEL-SIZE) * 0.755 * #{$i} - var(--DAY-WHEEL-SIZE) * 0.325);
+    }
+  }
+
 }
 
+.frame-overlay {
+  background: url("kehykset minirattailla.svg") no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: calc(100%);
+}

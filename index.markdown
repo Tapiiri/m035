@@ -9,25 +9,33 @@ layout: none
 </head>
 
 <body>
-    {% assign counters = "hours,minutes,seconds" | split: ',' %}
     <div class="main-container" id="counter">
         <div class="counter-container days">
         <div class="counter days" id="counter-days">
-            <div class="digit days" id="days-2" data-time="0"></div>
-            <div class="digit days" id="days-1" data-time="0"></div>
-            <div class="digit days" id="days-0" data-time="0"></div>
+            <div class="digit digit-1 days" id="days-2" data-time="0"></div>
+            <div class="digit digit-2 days" id="days-1" data-time="0"></div>
+            <div class="digit digit-3 days" id="days-0" data-time="0"></div>
         </div>
-        <h1>Days</h1>
         </div>
-        {% for counter in counters %}
-        <div class="counter-container {{counter}}">
-        <div class="counter {{counter}}" id="counter-{{counter}}">
-            <div class="digit {{counter}}" id="{{counter}}-1" data-time="0"></div>
-            <div class="digit {{counter}}" id="{{counter}}-0" data-time="0"></div>
+        <div class="small-wheels-container">
+            {% assign counters = "hours,minutes,seconds" | split: ',' %}
+            {% for counter in counters %}
+                <div class="counter-container {{counter}}">
+                    <div class="counter {{counter}}" id="counter-{{counter}}">
+                        <div class="digit digit-1 {{counter}}" id="{{counter}}-1" data-time="0"></div>
+                        <div class="digit digit-2 {{counter}}" id="{{counter}}-0" data-time="0"></div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        <h3>{{ counter | capitalize }}</h3>
+        <div class="frame-container">
+            <div class="frame-overlay">
+                <h1>Days</h1>
+                {% for counter in counters %}
+                    <h3>{{ counter | capitalize }}</h3>
+                {% endfor %}
+            </div>
         </div>
-        {% endfor %}
     </div>
   <script src="assets/counterScript.js"></script>
 
