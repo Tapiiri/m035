@@ -1,3 +1,6 @@
+---
+---
+
 * {
   background: #312E39;
 }
@@ -17,9 +20,11 @@
   flex: 1 0 10%;
 }
 
-.counter-container h1, .counter-container h3  {
-  text-align: center;
-  color: white;
+.counter-container {
+  h1, h3 {
+    text-align: center;
+    color: white;
+  }
 }
 
 .counter {
@@ -36,10 +41,18 @@
   font-size: 10em;
 }
 
+@use "sass:string";
+
 .digit {
   background: white;
   color: black;
   position: relative;
+
+  @for $i from 0 through 9 {
+    &[data-time="#{$i}"] {
+      transform: rotate(calc(36deg * #{$i}));
+    }
+  }
 }
 
 .digit+.digit{
@@ -49,3 +62,4 @@
 .digit::after {
   content: attr(data-time);
 }
+
