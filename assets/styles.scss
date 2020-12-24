@@ -24,7 +24,14 @@
 }
 
 html {
-  background: #312E39;
+  background: black;
+}
+
+body {
+  background-image: url("tausta 1.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
 }
 
 .vertical-container {
@@ -73,11 +80,30 @@ html {
   justify-content: center;
 }
 
+
 #counter-days::after {
-  position:absolute;
+  //content: "";
   z-index: -5;
-  background-image: url("taustapyörijä 2D.svg");
+  position:absolute;
+  left: calc(50% - var(--DAY-WHEEL-SIZE) / 2);
+  animation: rotateWheel 10s linear infinite forwards;
+  background-image: url("taustapyorija 2D.svg");
+  width: var(--DAY-WHEEL-SIZE);
+  height: var(--DAY-WHEEL-SIZE);
 }
+
+@keyframes rotateWheel {
+  0% {
+    transform: rotate(0deg);
+  }
+  99.9% {
+    transform: rotate(359deg);
+  }
+  100% {
+    transform: rotate (359.9deg);
+  }
+}
+
 
 .digit {
   background-position: center;
@@ -89,11 +115,19 @@ html {
   transform: rotate(0);
   width: var(--SMALL-WHEEL-SIZE);
   height: var(--SMALL-WHEEL-SIZE);
+  --ONE-TURN: calc(360deg / 10);
   
   &-1 {
-    background-image: url("pikkukello 1.svg");
+    background-image: url("sekunti-minuuttikello.svg");
+    --ONE-TURN: calc(360deg / 6);
     --rotation-direction: -1;
-    z-index: -1
+    z-index: -1;
+    &.hours {
+      background-image: url("tuntikello.svg");
+      --ONE-TURN: calc(360deg / 3);
+      --rotation-direction: -1;
+      z-index: -1;
+    }
   }
 
   &-2 {
@@ -104,13 +138,14 @@ html {
 
   @for $i from 0 through 9 {
     &[data-time="#{$i}"] {
-      transform: rotate(calc(var(--rotation-direction) * 36deg * #{$i}));
+      transform: rotate(calc(var(--rotation-direction) * var(--ONE-TURN) * #{$i}));
     }
   }
 }
 
 
 .days {
+  --ONE-TURN: calc(360deg / 10);
   &.counter-container {
     z-index: -1;
     margin-bottom: var(--DAYS-CONTAINER-INSET-BOTTOM);
