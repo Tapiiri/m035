@@ -8,6 +8,8 @@
 }
 * {
   margin: 0px;
+  font-family: "Coventry Garden";
+  
   --MAIN-TOP: 0px;
   --MAIN-SCALE: 0.9;
   --DAY-WHEEL-SIZE: 40vw;
@@ -20,15 +22,18 @@
   --DAYS-CONTAINER-INSET-BOTTOM: calc(0px - var(--DAY-WHEEL-SIZE) / 1.56 );
   --FRAME-TOP: calc(var(--DAY-WHEEL-SIZE) / 2.75);
   --FRAME-HEIGHT: calc(100vh - var(--FRAME-TOP) - var(--MAIN-TOP));
-  font-family: "Coventry Garden"
+
+  --BACKGROUND-COLOR: black;
+  --BACKGROUND-IMG-URL: url("tausta 1.svg");
+  --FRAME-URL: url("kehykset minirattailla.svg");
 }
 
 html {
-  background: black;
+  background: var(--BACKGROUND-COLOR);
 }
 
 body {
-  background-image: url("tausta 1.svg");
+  background-image: var(--BACKGROUND-IMG-URL);
   background-size: cover;
   background-repeat: no-repeat;
   background-position-x: center;
@@ -92,7 +97,7 @@ body {
   height: var(--DAY-WHEEL-SIZE);
 }
 
-@keyframes rotateWheel {
+@keyframes rotateBackgroundWheel {
   0% {
     transform: rotate(0deg);
   }
@@ -204,7 +209,7 @@ body {
 }
 
 .frame-overlay {
-  background: url("kehykset minirattailla.svg") no-repeat;
+  background: var(--FRAME-URL) no-repeat;
   background-size: contain;
   width: 100%;
   height: calc(100%);
